@@ -67,8 +67,6 @@ const Promotions = ({
             {backgroundColor: `${promotions.PromotionCardColor}`},
           ]}></View>
       </TouchableOpacity>
-
-      <View style={{flex: 1}}></View>
     </>
   );
 };
@@ -119,7 +117,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   designedView: {
-    width: '99%',
+    width: '97%',
     transform: [{skewY: '3deg'}],
     height: 80,
     borderBottomLeftRadius: 20,
