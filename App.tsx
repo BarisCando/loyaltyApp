@@ -1,20 +1,7 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
-
 import {NavigationContainer} from '@react-navigation/native';
 import React, {type PropsWithChildren} from 'react';
 import {StyleSheet, useColorScheme} from 'react-native';
-
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import Main from './src/navigation/main/Main';
-import MainNavigation from './src/navigation/main/Main';
 import BottomNavigator from './src/navigation/bottom/Bottom';
 
 const App = () => {

@@ -1,61 +1,53 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {
+  Dimensions,
   FlatList,
   Image,
   SafeAreaView,
-  StyleSheet,
   Text,
   View,
-  useColorScheme,
 } from 'react-native';
-
-import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {styles} from './Styles';
 import axios from 'axios';
 import {Alltags} from '../../models/tag';
 import Tags from '../../components/tags/Tags';
 import Promotions from '../../components/promotions/Promotions';
 import {Promotion} from '../../models/promotions';
+import {getPromotionsList, onTagPressed} from '../../api/api';
+import {tags} from '../../api/mockData';
 
 const Home = () => {
-  const [tagData, setTagData] = useState<Alltags[]>([]);
   const [promotionData, setPromotionData] = useState<Promotion[]>([]);
+  const [tagId, setTagId] = useState<number>(33);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [tagName, setTagName] = useState<string>('');
+
+  const onViewRef = useRef(({viewableItems}: {viewableItems: any}) => {
+    if (viewableItems.length > 0) {
+      setCurrentIndex(viewableItems[0].index);
+    }
+  });
 
   const flatListRef = useRef<any>(null);
 
   useEffect(() => {
-    axios({
-      method: 'GET',
-      url: 'https://api.extrazone.com/tags/list',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Country-Id': 'TR',
-        'X-Language-Id': 'TR',
-      },
-    })
-      .then(response => {
-        console.log(response, 'lksfşldksflşs');
+    if (tagId === 33) {
+      getPromotionsList()
+        .then(data => {
+          console.log(data, 'ads');
 
-        setTagData(response.data);
-      })
-      .catch(e => console.log(e));
+          setPromotionData(data);
+        })
+        .catch(error => console.error(error));
+    } else {
+      onTagPressed(tagId).then(data => {
+        setPromotionData([data]);
+      });
+    }
+  }, [tagId]);
 
-    axios({
-      method: 'GET',
-      url: 'https://api.extrazone.com/promotions/list?Channel=PWA',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Country-Id': 'TR',
-        'X-Language-Id': 'TR',
-      },
-    })
-      .then(response => {
-        setPromotionData(response.data);
-      })
-      .catch(e => console.log(e));
-  }, []);
+  const viewConfigRef = useRef({viewAreaCoveragePercentThreshold: 50});
+
+  console.log(promotionData, 'promotionData');
 
   return (
     <SafeAreaView style={styles.container}>
@@ -79,27 +71,44 @@ const Home = () => {
       <View>
         <FlatList
           showsHorizontalScrollIndicator={false}
-          data={tagData}
+          data={tags}
           horizontal
           renderItem={({item, index}) => (
-            <Tags
-              tags={item}
-              index={index}
-              setTagName={setTagName}
-              tagName={tagName}
-            />
+            <Tags tags={item} index={index} setTagId={setTagId} tagId={tagId} />
           )}
         />
       </View>
-      <FlatList
-        data={promotionData}
-        horizontal
-        renderItem={({item, index}) => (
-          <>
-            <Promotions promotions={item} index={index} />
-          </>
-        )}
-      />
+      <View>
+        <FlatList
+          data={promotionData}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          keyExtractor={(_, index) => index.toString()}
+          renderItem={({item, index}) => (
+            <Promotions promotions={item} index={index} tagData={tags} />
+          )}
+          onViewableItemsChanged={onViewRef.current}
+          viewabilityConfig={viewConfigRef.current}
+          ref={flatListRef}
+        />
+      </View>
+
+      <View style={styles.dotContainer}>
+        {promotionData.map((item, index) => (
+          <View
+            key={index}
+            style={[
+              styles.dot,
+              {
+                backgroundColor:
+                  index === currentIndex
+                    ? `${item?.PromotionCardColor}`
+                    : '#ccc',
+              },
+            ]}
+          />
+        ))}
+      </View>
     </SafeAreaView>
   );
 };

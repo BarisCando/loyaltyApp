@@ -18,34 +18,18 @@ import FastImage from 'react-native-fast-image';
 const Tags = ({
   tags,
   index,
-  setTagName,
-  tagName,
+  setTagId,
+  tagId,
 }: {
   tags: Alltags;
   index: number;
-  setTagName: (newTagName: string) => void;
-  tagName: string;
+  setTagId: (newTagName: number) => void;
+  tagId: number;
 }) => {
   const onTagPressed = (item: Alltags) => {
-    setTagName(item.Name);
-    axios({
-      method: 'GET',
-      url: `https://api.extrazone.com/promotions?Id=${tags.Id}`,
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Country-Id': 'TR',
-        'X-Language-Id': 'TR',
-      },
-    })
-      .then(response => {
-        console.log(response);
-      })
-      .catch(e => console.log(e));
+    setTagId(item.id);
+    onTagPressed;
   };
-
-  useEffect(() => {
-    console.log(tagName, 'tagname', tagName === tags.Name);
-  }, [tagName]);
 
   return (
     <TouchableOpacity
@@ -54,18 +38,19 @@ const Tags = ({
         styles.container,
         {
           marginLeft: index === 0 ? 15 : 5,
-          borderColor: tagName === tags.Name ? 'blue' : 'red',
+          borderColor: tagId === tags.id ? 'red' : '#d8d8d8',
         },
       ]}>
       <FastImage
-        source={{uri: tags.IconUrl}}
+        resizeMode="contain"
+        source={{uri: tags.imageUrl}}
         style={{
           width: 24,
           height: 24,
           marginRight: 5,
         }}
       />
-      <Text>{tags.Name}</Text>
+      <Text>{tags.brandName}</Text>
     </TouchableOpacity>
   );
 };

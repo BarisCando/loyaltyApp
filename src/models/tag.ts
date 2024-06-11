@@ -1,6 +1,7 @@
 export interface Alltags {
-  IconUrl: string;
-  Id: number;
-  Name: string;
-  Rank: number;
+  id: number;
+  brandName: string;
+  title: string;
+  imageUrl: string;
+  description: string;
 }

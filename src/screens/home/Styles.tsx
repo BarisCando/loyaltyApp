@@ -1,4 +1,6 @@
-import {StyleSheet} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
+
+const {width} = Dimensions.get('window');
 
 export const styles = StyleSheet.create({
   container: {
@@ -48,15 +50,21 @@ export const styles = StyleSheet.create({
     width: 81,
     height: 40,
   },
-  dotsContainer: {
+  image: {
+    width: width,
+    height: 200,
+    resizeMode: 'contain',
+  },
+  dotContainer: {
+    marginTop: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
     flexDirection: 'row',
-    position: 'absolute',
-    bottom: 70,
   },
   dot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    margin: 5,
+    height: 10,
+    width: 10,
+    borderRadius: 5,
+    marginHorizontal: 5,
   },
 });
