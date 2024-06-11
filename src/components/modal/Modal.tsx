@@ -109,8 +109,9 @@ const styles = StyleSheet.create({
   },
   logoImage: {
     resizeMode: 'contain',
-    width: 60,
-    height: 60,
+    borderRadius: 99,
+    width: 50,
+    height: 50,
   },
   detailImage: {
     width: '100%',
@@ -126,8 +127,8 @@ const styles = StyleSheet.create({
     left: 5,
     overflow: 'hidden',
     borderRadius: 99,
-    paddingVertical: 5,
-    paddingHorizontal: 5,
+    paddingVertical: 8,
+    paddingHorizontal: 8,
   },
   imageButton: {
     left: 20,

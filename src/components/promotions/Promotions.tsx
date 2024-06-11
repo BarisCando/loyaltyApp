@@ -45,7 +45,8 @@ const Promotions = ({
               source={{uri: promotions?.BrandIconUrl}}
               resizeMode="contain"
               style={{
-                width: 40,
+                width: 50,
+                borderRadius: 99,
                 height: 50,
               }}
             />
@@ -98,8 +99,8 @@ const styles = StyleSheet.create({
     right: 240,
     overflow: 'hidden',
     borderRadius: 99,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
+    paddingVertical: 7,
+    paddingHorizontal: 7,
   },
   image: {
     borderBottomLeftRadius: 100,
